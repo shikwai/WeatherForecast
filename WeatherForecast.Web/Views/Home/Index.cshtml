@@ -1,0 +1,161 @@
+﻿@model WeatherForecast.Models.Weather
+
+@{
+    ViewBag.Title = "Home Page";
+}
+<style>
+    body {
+        padding: 30px;
+    }
+
+    .table {
+        width: 93%;
+    }
+
+    .table-header-rotated th.row-header {
+        width: auto;
+    }
+
+    .table-header-rotated td {
+        width: 40px;
+        border-top: 1px solid #dddddd;
+        border-left: 1px solid #dddddd;
+        border-right: 1px solid #dddddd;
+        border-bottom: 1px solid #dddddd;
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    .table-header-rotated th.rotate-45 {
+        height: 80px;
+        position: relative;
+        vertical-align: bottom;
+        padding: 0;
+        font-size: 12px;
+        line-height: 0.8;
+    }
+
+        .table-header-rotated th.rotate-45 > div {
+            position: relative;
+            top: 0px;
+            left: 40px; /* 80 * tan(45) / 2 = 40 where 80 is the height on the cell and 45 is the transform angle*/
+            height: 100%;
+            transform: skew(-45deg,0deg);
+            overflow: hidden;
+            border-left: 1px solid #dddddd;
+            border-right: 1px solid #dddddd;
+            border-top: 1px solid #dddddd;
+        }
+
+        .table-header-rotated th.rotate-45 span {
+            transform: skew(45deg,0deg) rotate(315deg);
+            position: absolute;
+            bottom: 30px; /* 40 cos(45) = 28 with an additional 2px margin*/
+            left: -25px; /*Because it looked good, but there is probably a mathematical link here as well*/
+            display: inline-block;
+            width: 85px; /* 80 / cos(45) - 40 cos (45) = 85 where 80 is the height of the cell, 40 the width of the cell and 45 the transform angle*/
+            text-align: left;
+        }
+
+    .table-header-rotated th:first-of-type, .table-header-rotated td:first-of-type {
+        text-align: left;
+    }
+
+    }
+</style>
+@{
+    var batches = Model.list
+    .Select((x, i) => new { x, i })
+    .GroupBy(p => (p.i / 2), p => p.x);
+}
+
+@using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @id = "form1", enctype = "multipart/form-data" }))
+{
+    <div class="jumbotron">
+        <h1>Welcome to weather forecasts!</h1>
+        <div class="scrollable-table">
+            <table class="table table-striped table-header-rotated">
+                <tbody>
+                    <tr>
+                        <td class="row-header">City</td>
+                        <td>@Model.city.name</td>
+                    </tr>
+                    <tr>
+                        <td class="row-header">From Date</td>
+                        <td>@ViewBag.StartFrom</td>
+                    </tr>
+                    <tr>
+                        <td class="row-header">To Date</td>
+                        <td>@ViewBag.StartTo</td>
+                    </tr>
+                    <tr>
+                        <td class="row-header">Total Forecast Rainfall</td>
+                        <td>@ViewBag.TotalRainfall</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>  
+    <div class="row">
+        <div class="col-md-2">
+            @Html.DropDownList("drpLocation", ViewData["ListLocation"] as SelectList, new { @class = "form-control" })            
+        </div>
+        <div class="col-md-10">
+            <div class="form-group">
+                <p class="submit">
+                    <input type="submit" value="Go" name="commit" class="btn btn-default" />
+                </p>
+            </div>
+        </div>
+    </div>    
+    <br />
+    foreach (var row in batches)
+    {
+        <div class="row">            
+                @foreach (var item in row)
+                {
+                    <div class="col-md-6">
+                        <div class="scrollable-table">
+                            <table class="table table-striped table-header-rotated">
+                                <tbody>
+                                    <tr>
+                                        <td class="row-header">Date and Time</td>
+                                        <td>@item.dt_txt</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="row-header">Min Temperature</td>
+                                        <td>@item.main.temp_min</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="row-header">Max Temperature</td>
+                                        <td>@item.main.temp_max</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="row-header">Rainfall</td>                                        
+                                            @if (item.rain != null)
+                                            {
+                                                <td>@item.rain.ThreeHours</td>
+                                            }
+                                            else
+                                            {
+                                                <td>0.00</td>
+                                            }                                            
+                                    </tr>
+                                    <tr>
+                                        <td class="row-header">Humidity </td>
+                                        <td>@item.main.humidity</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="row-header">pressure </td>
+                                        <td>@item.main.pressure</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                }                   
+        </div>
+    
+    }
+}

@@ -1,0 +1,9 @@
+C:\TestProjects\JordanTest2\WeatherForecast\WeatherForecast.Services\bin\Debug\WeatherForecast.Services.dll
+C:\TestProjects\JordanTest2\WeatherForecast\WeatherForecast.Services\bin\Debug\WeatherForecast.Services.pdb
+C:\TestProjects\JordanTest2\WeatherForecast\WeatherForecast.Services\bin\Debug\Newtonsoft.Json.dll
+C:\TestProjects\JordanTest2\WeatherForecast\WeatherForecast.Services\bin\Debug\WeatherForecast.Models.dll
+C:\TestProjects\JordanTest2\WeatherForecast\WeatherForecast.Services\bin\Debug\WeatherForecast.Models.pdb
+C:\TestProjects\JordanTest2\WeatherForecast\WeatherForecast.Services\bin\Debug\Newtonsoft.Json.xml
+C:\TestProjects\JordanTest2\WeatherForecast\WeatherForecast.Services\obj\Debug\WeatherForecast.Services.csprojResolveAssemblyReference.cache
+C:\TestProjects\JordanTest2\WeatherForecast\WeatherForecast.Services\obj\Debug\WeatherForecast.Services.dll
+C:\TestProjects\JordanTest2\WeatherForecast\WeatherForecast.Services\obj\Debug\WeatherForecast.Services.pdb
